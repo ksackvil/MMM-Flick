@@ -15,10 +15,10 @@ function listen(os, nh){
 
   // change spawn based on os
   if(os === 'Win32') {
-      cmd = spawn('cmd', ['/c', 'py', './modules/MMM-skywriter/test.py']);
+      cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/test.py']);
   }
   else {
-      cmd = spawn('python',['./modules/MMM-skywriter/FlickSensor.py'])
+      cmd = spawn('python',['./modules/MMM-Flick/FlickSensor.py'])
   }
 
   cmd.stdout.on('data', (data) => {

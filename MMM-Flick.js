@@ -8,7 +8,7 @@
  * 		May, 2018 ckk
  */
 
-Module.register("MMM-skywriter", {
+Module.register("MMM-Flick", {
 	// Default module config.
 	defaults: {
 		swipeState: "",
@@ -16,7 +16,7 @@ Module.register("MMM-skywriter", {
 	},
 
 	start() {
-		Log.log('MMM-skywriter started!');
+		Log.log('MMM-Flick started!');
 		this.sendSocketNotification("START_PY", {os: window.navigator.platform});
 	},
 

@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-import flicklib
+
 import time
 import signal
 import sys
+import flicklib
 
 sleeptime = 0.1
 #@flicklib.move()
