@@ -17,6 +17,9 @@ function listen(os, nh){
   if(os === 'Win32' || os === 'MacIntel') {
       cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/test.py']);
   }
+  else if ( os === 'MacIntel') {
+      cmd = span('python',['./modules/MMM-Flick/test.py'])
+  }
   else {
       cmd = spawn('python',['./modules/MMM-Flick/FlickSensor.py'])
   }
