@@ -14,7 +14,7 @@ function listen(os, nh){
   var cmd = null;
 
   // change spawn based on os
-  if(os === 'Win32') {
+  if(os === 'Win32' || os === 'MacIntel') {
       cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/test.py']);
   }
   else {
@@ -24,11 +24,6 @@ function listen(os, nh){
   cmd.stdout.on('data', (data) => {
     var str_data = data.toString()
     str_data = str_data.slice(0,-1)
-    // console.log(typeof(str_data));
-    // if (str_data === 'sensed') {
-    //   console.log('here');
-    //   nh.sendSocketNotification("MOVEMENT_IN_RANGE", {})
-    // }
     nh.sendSocketNotification("SENSOR_SWIPED", {action: str_data});
   });
   cmd.stderr.on('data', (data) => {

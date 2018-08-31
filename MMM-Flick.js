@@ -5,7 +5,7 @@
  *	@Author:
  *  	Kai Sackville-Hii
  * 	@Date:
- * 		May, 2018 ckk
+ * 		May, 2018
  */
 
 Module.register("MMM-Flick", {
@@ -34,6 +34,4 @@ Module.register("MMM-Flick", {
 		wrapper.innerHTML = this.config.swipeState
 		return wrapper;
 	},
-
-
 });
