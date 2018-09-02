@@ -15,6 +15,10 @@ Module.register("MMM-Flick", {
 		inRange: false
 	},
 
+	getStyles() {
+		return [this.file("/css/main.css")];
+	},
+
 	start() {
 		Log.log('MMM-Flick started!');
 		this.sendSocketNotification("START_PY", {os: window.navigator.platform});
@@ -31,6 +35,7 @@ Module.register("MMM-Flick", {
 	// Override dom generator.
 	getDom: function() {
 		var wrapper = document.createElement("div");
+		wrapper.className = "test"
 		wrapper.innerHTML = this.config.swipeState
 		return wrapper;
 	},
