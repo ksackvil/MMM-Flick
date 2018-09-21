@@ -26,17 +26,59 @@ Module.register("MMM-Flick", {
 
 	socketNotificationReceived(notification, payload) {
 		if (notification === "SENSOR_SWIPED") {
-			this.config.swipeState = payload.action
-			this.updateDom()
-			this.sendNotification('SENSOR_SWIPED', {action:payload.action});
+			this.config.swipeState = payload.action;
+			this.updateDom();
+			// this.sendNotification('SENSOR_SWIPED', {action:payload.action});
 		}
+	},
+
+	getArrows() {
+	  var leftClassName = "idle-menu-items";
+	  var rightClassName = "idle-menu-items";
+	  var airwheelClassName = "idle-menu-items";
+
+		if(this.config.swipeState) {
+			console.log(this.config.swipeState);
+			if(this.config.swipeState === "left\r\n"){
+				console.log(1);
+			}
+		}
+
+		// switch (this.config.swipeState) {
+		// 	case 'left':
+		// 		console.log('1');
+		// 		break;
+		// 	case 'right':
+		// 		console.log('2');
+		// 		break;
+		// 	default:
+		// 		console.log(3);
+		// 		break;
+		// }
+
+		// else if (this.config.swipeState === 'left') {
+		// 	Log.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~ Flick ${this.config.swipeState}`)
+		// 	leftClassName = 'test';
+		// }
+		// else if (this.config.swipeState === 'airwheel') {
+		// 	airwheelClassName = 'test';
+		// }
+
+		var wrapper = document.createElement("div");
+
+		wrapper.innerHTML = `
+			<div>
+			<img id="left" class=${leftClassName} src="modules/MMM-Flick/images/left_arrow.svg" alt="Kiwi standing on oval">
+			<img class=${airwheelClassName} src="modules/MMM-Flick/images/airwheel.svg" alt="Kiwi standing on oval">
+			<img class=${rightClassName} src="modules/MMM-Flick/images/right_arrow.svg" alt="Kiwi standing on oval">
+			`;
+
+		return wrapper;
 	},
 
 	// Override dom generator.
 	getDom: function() {
-		var wrapper = document.createElement("div");
-		wrapper.className = "test"
-		wrapper.innerHTML = this.config.swipeState
-		return wrapper;
+		let content = this.getArrows();
+		return content
 	},
 });
