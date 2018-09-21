@@ -21,14 +21,14 @@ Module.register("MMM-Flick", {
 
 	start() {
 		Log.log('MMM-Flick started!');
-		this.sendSocketNotification("START_PY", {os: window.navigator.platform});
+		// this.sendSocketNotification("START_PY", {os: window.navigator.platform});
 	},
 
 	socketNotificationReceived(notification, payload) {
 		if (notification === "SENSOR_SWIPED") {
-			this.config.swipeState = payload.action;
+			this.config.swipeState = payload.action.trim();
 			this.updateDom();
-			// this.sendNotification('SENSOR_SWIPED', {action:payload.action});
+			this.sendNotification('SENSOR_SWIPED', {action:payload.action});
 		}
 	},
 
@@ -37,24 +37,19 @@ Module.register("MMM-Flick", {
 	  var rightClassName = "idle-menu-items";
 	  var airwheelClassName = "idle-menu-items";
 
-		if(this.config.swipeState) {
-			console.log(this.config.swipeState);
-			if(this.config.swipeState === "left\r\n"){
-				console.log(1);
-			}
+		switch (this.config.swipeState) {
+			case 'left':
+				leftClassName = 'test';
+				break;
+			case 'right':
+				rightClassName = 'test';
+				break;
+			case 'airwheel':
+				airwheelClassName = 'test';
+				break;
+			default:
+				break;
 		}
-
-		// switch (this.config.swipeState) {
-		// 	case 'left':
-		// 		console.log('1');
-		// 		break;
-		// 	case 'right':
-		// 		console.log('2');
-		// 		break;
-		// 	default:
-		// 		console.log(3);
-		// 		break;
-		// }
 
 		// else if (this.config.swipeState === 'left') {
 		// 	Log.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~ Flick ${this.config.swipeState}`)
@@ -68,9 +63,10 @@ Module.register("MMM-Flick", {
 
 		wrapper.innerHTML = `
 			<div>
-			<img id="left" class=${leftClassName} src="modules/MMM-Flick/images/left_arrow.svg" alt="Kiwi standing on oval">
-			<img class=${airwheelClassName} src="modules/MMM-Flick/images/airwheel.svg" alt="Kiwi standing on oval">
-			<img class=${rightClassName} src="modules/MMM-Flick/images/right_arrow.svg" alt="Kiwi standing on oval">
+				<img id="left" class=${leftClassName} src="modules/MMM-Flick/images/left_arrow.svg" alt="Kiwi standing on oval">
+				<img class=${airwheelClassName} src="modules/MMM-Flick/images/airwheel.svg" alt="Kiwi standing on oval">
+				<img class=${rightClassName} src="modules/MMM-Flick/images/right_arrow.svg" alt="Kiwi standing on oval">
+			</div>
 			`;
 
 		return wrapper;
