@@ -10,19 +10,29 @@
 
 const { spawn } = require('child_process');
 
-function listen(os, nh){
+function listen(payload, nh){
   var cmd = null;
+  var os = payload.os;
+  var sensor = payload.sensor;
 
-  // change spawn based on os
-  if(os === 'Win32' || os === 'MacIntel') {
-      cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/test.py']);
-  }
-  else if ( os === 'MacIntel') {
-      cmd = span('python',['./modules/MMM-Flick/test.py'])
+  // change spawn based on os and if sensor is connected
+  if(os === 'Win32') {
+      if (sensor) {
+        cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/FlickSensor.py']);
+      }
+      else {
+        // cmd = spawn('cmd', ['/c', 'py', './modules/MMM-Flick/test.py']);
+      }
   }
   else {
-      cmd = spawn('python',['./modules/MMM-Flick/FlickSensor.py'])
+      if (sensor) {
+        cmd = spawn('python',['./modules/MMM-Flick/FlickSensor.py'])
+      }
+      else {
+        cmd = spawn('python', ['./modules/MMM-Flick/test.py'])
+      }
   }
+
 
   cmd.stdout.on('data', (data) => {
     var str_data = data.toString()

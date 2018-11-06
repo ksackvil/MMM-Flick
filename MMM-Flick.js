@@ -21,14 +21,16 @@ Module.register("MMM-Flick", {
 
 	start() {
 		Log.log('MMM-Flick started!');
-		// this.sendSocketNotification("START_PY", {os: window.navigator.platform});
+		Log.log(this.config.sensor)
+		this.sendSocketNotification("START_PY", {os: window.navigator.platform, sensor: this.config.sensor});
+		document.onkeydown = this.checkKey.bind(this)
 	},
 
 	socketNotificationReceived(notification, payload) {
 		if (notification === "SENSOR_SWIPED") {
 			this.config.swipeState = payload.action.trim();
 			this.updateDom();
-			this.sendNotification('SENSOR_SWIPED', {action:payload.action});
+			this.sendNotification('SENSOR_SWIPED', {action:payload.action.trim()}); // this is needed for some reason to make swipe happen
 		}
 	},
 
@@ -51,14 +53,6 @@ Module.register("MMM-Flick", {
 				break;
 		}
 
-		// else if (this.config.swipeState === 'left') {
-		// 	Log.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~ Flick ${this.config.swipeState}`)
-		// 	leftClassName = 'test';
-		// }
-		// else if (this.config.swipeState === 'airwheel') {
-		// 	airwheelClassName = 'test';
-		// }
-
 		var wrapper = document.createElement("div");
 
 		wrapper.innerHTML = `
@@ -70,6 +64,34 @@ Module.register("MMM-Flick", {
 			`;
 
 		return wrapper;
+	},
+
+	checkKey(e) {
+		e = e || window.event;
+		var key = e.keyCode;
+
+		switch (key) {
+			case 37:
+				this.config.swipeState = "left";
+				this.updateDom();
+				this.sendNotification('SENSOR_SWIPED', {action:"left"});
+				break;
+
+			case 39:
+				this.config.swipeState = "right";
+				this.updateDom();
+				this.sendNotification('SENSOR_SWIPED', {action:"right"});
+				break;
+
+			case 65:
+				this.config.swipeState = "airwheel";
+				this.updateDom();
+				this.sendNotification('SENSOR_SWIPED', {action:"airwheel"});
+				break;
+				
+			default:
+				break;
+		}
 	},
 
 	// Override dom generator.

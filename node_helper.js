@@ -13,9 +13,8 @@ var sensor = require('./sensor.js');
 module.exports = NodeHelper.create({
 
     socketNotificationReceived(notification, payload) {
-
         if (notification === "START_PY") {
-          sensor.listen(payload.os, this)
+          sensor.listen(payload, this)
         }
         return;
     }
